@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr-3.0.xsd">
+  <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+       <property name="driverClass">
+           <value>${driverClass}</value>
+       </property>
+       <property name="jdbcUrl">
+           <value>${jdbcUrl}</value>
+       </property>
+       <property name="user">
+           <value>${user}</value>
+       </property>
+       <property name="password">
+           <value>${password}</value>
+       </property>      
+  </bean>
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+      <property name="dataSource" ref="dataSource"></property>
+      <property name="annotatedClasses">
+          <list>
+            <value>com.cypc.tgdc.cddc.ad.model.Dutylog</value>
+          </list>
+      </property>
+      <property name="hibernateProperties">
+         <props>
+            <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+            <prop key="hibernate.show_sql">true</prop>
+         </props>
+      </property>
+  </bean>
+   <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+      <property name="sessionFactory" ref="sessionFactory"></property>
+  </bean>
+  <bean id="propertyConfigure" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+       <property name="locations">
+            <list>
+                <value>classpath:config/jdbc.properties</value>
+            </list>
+       </property>
+  </bean>
+  <bean name="dutyDao" class="com.cypc.tgdc.cddc.ad.dao.impl.DutyDaoImpl"> 
+      <property name="sessionFactory"><ref bean = "sessionFactory"/></property>
+  </bean>
+   <bean name="chartDao" class="com.cypc.tgdc.cddc.ad.dao.impl.ChartDaoImpl"> 
+      <property name="sessionFactory"><ref bean = "sessionFactory"/></property>
+  </bean>
+  <bean name="dutyLogServer" class="com.cypc.tgdc.cddc.ad.service.impl.DutyLogServiceImp">
+      <property name="dutyDao" ref="dutyDao" ></property>
+  </bean>
+  <bean name="chartServer" class="com.cypc.tgdc.cddc.ad.service.impl.ChartServiceImpl">
+      <property name="chartDao" ref="chartDao" ></property>
+  </bean>
+</beans>

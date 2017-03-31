@@ -1,0 +1,66 @@
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Highstock Example</title>
+
+		   <script src="script/jquery-1.11.1.min.js"></script>
+		<style type="text/css">
+${demo.css}
+		</style>
+		<script type="text/javascript">
+$(function () {
+	Highcharts.setOptions({
+	    global: { useUTC: false},
+	    	credits : { enabled : false }
+	
+	});
+	$.ajax({
+		type: "GET",
+		url: "totalcolumn.action",
+		success:function(result){
+			var datas = result.totalcolumns;
+        $('#container').highcharts('StockChart', {
+
+
+            rangeSelector : {
+                selected : 1,
+                inputEnabled: $('#container').width() > 480
+            },
+
+            title : {
+                text : '值班电话频谱图'
+            },
+
+            series: [{
+            	type: 'column',
+	        	name:'个数',
+	            data: (function () {
+                  
+                    var data = [],
+                    i
+                    for (i =0; i < datas.length; i += 1) {
+                        data.push({
+                            x: datas[i].time,
+                            y: parseInt(datas[i].number)
+                       });
+                   }
+                    return data;
+                }()),
+                
+	        }]
+        });
+		}
+    });
+
+});
+		</script>
+	</head>
+	<body>
+<script src="script/highstock.js"></script>
+<script src="script/modules/exporting.js"></script>
+
+<div id="container" style="height: 400px; min-width: 310px"></div>
+	</body>
+</html>

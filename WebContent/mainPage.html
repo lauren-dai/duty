@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>自动化部</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="css/plugins/timeline.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="css/plugins/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="mainPage.html">自动化部</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> 用户信息</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> 设置</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> 注销</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="搜索...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a class="active" href="mainPage.html"><i class="fa fa-dashboard fa-fw"></i> 概览</a>
+                        </li>
+                        <li>
+                            <a href="recording.html"><i class="fa fa-bar-chart-o fa-fw"></i> 电话记录</a>                                     
+                        </li>
+                        <li>
+                            <a href="historyrecord.html"><i class="fa fa-table fa-fw"></i> 历史记录</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-edit fa-fw"></i> 备品备件</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i>专业文档</a>                    
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">概览</h1>
+                </div>               
+            </div>
+          <div class="row">
+                <div class="col-lg-12">
+                     <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> 全年统计
+                        </div>                       
+                        <div class="panel-body">
+                            <div id="year"></div>
+                        </div>                        
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> 反应问题分类
+                        </div>                       
+                        <div class="panel-body">
+                            <div id="pie"></div>
+                        </div>                        
+                    </div>
+                     <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i>接听统计
+                        </div>                       
+                        <div class="panel-body">
+                            <div id=namecolumn></div>
+                        </div>                        
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i>周分布
+                        </div>
+                        
+                        <div class="panel-body">
+                            <div id="daycolumn"></div> 
+                        </div>
+                        
+                    </div>
+               </div>
+                <div class="col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> 时段分布
+                        </div>                    
+                        <div class="panel-body">
+                            <div id="timecolumn"></div>
+                        </div>                      
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> 月分布情况
+                        </div>
+                        
+                        <div class="panel-body">
+                            <div id="monthcolumn"></div>
+                        </div>                      
+                    </div>
+                    
+               </div>
+
+            <!--   <div id="monthcolumn" style="min-width: 310px; height: 400px; width:40%; margin: 0 auto"></div>
+             <div id="namecolumn" style="min-width: 310px; height: 400px; width: 40%; margin: 0 auto"></div>
+             <div id="timecolumn" style="min-width: 310px; height: 800px; width: 400px; margin: 0 auto"></div>
+             <div id="daycolumn" style="min-width: 310px; height: 400px; width: 40%; margin: 0 auto"></div>-->
+           </div>   
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="script/jquery-1.11.1.min.js"></script>
+    <script src="script/highstock.js"></script>
+    <script src="script/highcharts.js"></script>
+    
+    <script src="script/modules/exporting.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="script/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="script/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript 
+    <script src="script/raphael.min.js"></script>
+    <script src="script/morris.min.js"></script>
+    <script src="script/morris-data.js"></script>
+-->
+    <!-- Custom Theme JavaScript -->
+    <script src="script/sb-admin-2.js"></script>
+    <script type="text/javascript">
+       $(function(){
+    	   Highcharts.setOptions({
+   		    global: { useUTC: false},
+   		    	credits : { enabled : false }
+   		
+   		   });
+    		$.ajax({
+    			type: "GET",
+    			url: "totalcolumn.action",
+    			success:function(result){
+    				var datas = result.totalcolumns;
+    	        $('#year').highcharts('StockChart', {
+    	            rangeSelector : {
+    	                selected : 1,
+    	                inputEnabled: $('#container').width() > 480
+    	            },
+    	            series: [{
+    	            	type: 'column',
+    		        	name:'个数',
+    		            data: (function () {
+    	                  
+    	                    var data = [],
+    	                    i
+    	                    for (i =0; i < datas.length; i += 1) {
+    	                        data.push({
+    	                            x: datas[i].time,
+    	                            y: parseInt(datas[i].number)
+    	                       });
+    	                   }
+    	                    return data;
+    	                }()),
+    	                
+    		        }]
+    	        });
+    			}
+    	    });
+    	   $.ajax({
+				type: "GET",
+				url: "pie.action",
+				success:function(result){
+					var datas = result.beans;
+					$('#pie').highcharts({
+						 chart: {
+					            plotBackgroundColor: null,
+					           
+					            plotShadow: false
+					        },
+					        title: {
+					            text: ''
+					        },
+					        tooltip: {
+					            pointFormat: '{series.name}: <b>{point.y}</b>,<b>{point.percentage:.1f}%</b>'
+					        },
+					        plotOptions: {
+					            pie: {
+					                allowPointSelect: true,
+					                cursor: 'pointer',
+					                dataLabels: {
+					                    enabled: true,
+					                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+					                    style: {
+					                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+					                    }
+					                }
+					            }
+					        },
+					        series: [{
+					            type: 'pie',
+					            name: '电话个数',
+					            data: (function () {
+				                    // generate an array of random data
+				                    var data = [],
+				                    i
+				                    for (i =0; i < datas.length; i += 1) {
+				                        data.push({
+				                            name: datas[i].typename,
+				                            y: parseInt(datas[i].number)
+				                       });
+				                   }
+				                    return data;
+				                }())
+					        }]
+					
+			          });
+				}
+			});
+			$.ajax({
+				type: "GET",
+				url: "monthcolumn.action",
+				success:function(result){
+					var datas = result.monthcolumns;
+					$('#monthcolumn').highcharts({
+						 chart: {
+							 type: 'column'
+					        },
+					        title: {
+					            text: ''
+					        },
+					        xAxis: {
+					            type: 'category',
+					            labels: {
+					                rotation: -45,
+					                style: {
+					                    fontSize: '13px',
+					                    fontFamily: 'Verdana, sans-serif'
+					                }
+					            }
+					        },
+					        yAxis: {
+					            min: 0,
+					            title: {
+					                text: '个数'
+					            }
+					        },
+					        series: [{
+					        	name:'个数',
+					            data: (function () {
+				                    // generate an array of random data
+				                    var data = [],
+				                    i
+				                    for (i =0; i < datas.length; i += 1) {
+				                        data.push({
+				                            name: datas[i].month,
+				                            y: parseInt(datas[i].number)
+				                       });
+				                   }
+				                    return data;
+				                }()),
+				                dataLabels: {
+			                           enabled: true,
+			                           rotation: -90,
+			                           color: '#FFFFFF',
+			                           align: 'right',
+			                           x: 4,
+			                           y: 10,
+			                           style: {
+			                              fontSize: '13px',
+			                              fontFamily: 'Verdana, sans-serif',
+			                              textShadow: '0 0 3px black'
+			                           }
+			                    }
+					        }]
+					
+			          });
+				}
+			});
+			$.ajax({
+				type: "GET",
+				url: "namecolumn.action",
+				success:function(result){
+					var datas = result.namecolumns;
+					$('#namecolumn').highcharts({
+						 chart: {
+							 type: 'column'
+					        },
+					        title: {
+					            text: ''
+					        },
+					        xAxis: {
+					            type: 'category',
+					            labels: {
+					                rotation: -45,
+					                style: {
+					                    fontSize: '13px',
+					                    fontFamily: 'Verdana, sans-serif'
+					                }
+					            }
+					        },
+					        yAxis: {
+					            min: 0,
+					            title: {
+					                text: '个数'
+					            }
+					        },
+					        series: [{
+					        	name:'个数',
+					            data: (function () {
+				                    // generate an array of random data
+				                    var data = [],
+				                    i
+				                    for (i =0; i < datas.length; i += 1) {
+				                        data.push({
+				                            name: datas[i].name,
+				                            y: parseInt(datas[i].number)
+				                       });
+				                   }
+				                    return data;
+				                }()),
+				                dataLabels: {
+			                           enabled: true,
+			                           rotation: -90,
+			                           color: '#FFFFFF',
+			                           align: 'right',
+			                           x: 4,
+			                           y: 10,
+			                           style: {
+			                              fontSize: '13px',
+			                              fontFamily: 'Verdana, sans-serif',
+			                              textShadow: '0 0 3px black'
+			                           }
+			                    }
+					        }]
+					
+			          });
+				}
+			});
+			$.ajax({
+				type: "GET",
+				url: "timecolumn.action",
+				success:function(result){
+					var datas = result.timecolumns;
+					$('#timecolumn').highcharts({
+						 chart: {
+							 type: 'bar',
+							 height:750
+					        },
+					        title: {
+					            text: ''
+					        },
+					        xAxis: {
+					            type: 'category',
+					            labels: {
+					                rotation: -45,
+					                style: {
+					                    fontSize: '13px',
+					                    fontFamily: 'Verdana, sans-serif'
+					                }
+					            }
+					        },
+					        yAxis: {
+					            min: 0,
+					            title: {
+					                text: '个数'
+					            },
+					            align: 'high',
+					            labels: {
+					                overflow: 'justify'
+					            }
+					        },
+					        series: [{
+					        	name:'个数',
+					            data: (function () {
+				                  
+				                    var data = [],
+				                    i
+				                    for (i =0; i < datas.length; i += 1) {
+				                        data.push({
+				                            name: datas[i].time,
+				                            y: parseInt(datas[i].number)
+				                       });
+				                   }
+				                    return data;
+				                }()),
+				                dataLabels: {
+			                           enabled: true,
+			                           rotation: -90,
+			                           color: '#FFFFFF',
+			                           align: 'right',
+			                           x: 4,
+			                           y: 10,
+			                           style: {
+			                              fontSize: '13px',
+			                              fontFamily: 'Verdana, sans-serif',
+			                              textShadow: '0 0 3px black'
+			                           }
+			                    }
+					        }]
+					
+			          });
+				}
+			});
+			$.ajax({
+				type: "GET",
+				url: "daycolumn.action",
+				success:function(result){
+					var datas = result.daycolumns;
+					$('#daycolumn').highcharts({
+						 chart: {
+							 type: 'column'
+					        },
+					        title: {
+					            text: ''
+					        },
+					        xAxis: {
+					            type: 'category',
+					            labels: {
+					                rotation: -45,
+					                style: {
+					                    fontSize: '13px',
+					                    fontFamily: 'Verdana, sans-serif'
+					                }
+					            }
+					        },
+					        yAxis: {
+					            min: 0,
+					            title: {
+					                text: '个数'
+					            }
+					        },
+					        series: [{
+					        	name:'个数',
+					            data: (function () {
+				                    // generate an array of random data
+				                    var data = [],
+				                    i
+				                    for (i =0; i < datas.length; i += 1) {
+				                        data.push({
+				                            name: datas[i].day,
+				                            y: parseInt(datas[i].number)
+				                       });
+				                   }
+				                    return data;
+				                }()),
+				                dataLabels: {
+			                           enabled: true,
+			                           rotation: -90,
+			                           color: '#FFFFFF',
+			                           align: 'right',
+			                           x: 4,
+			                           y: 10,
+			                           style: {
+			                              fontSize: '13px',
+			                              fontFamily: 'Verdana, sans-serif',
+			                              textShadow: '0 0 3px black'
+			                           }
+			                    }
+					        }]
+					
+			          });
+				}
+			});
+		
+       });
+    </script>
+</body>
+
+</html>

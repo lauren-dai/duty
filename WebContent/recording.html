@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>自动化部</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link  href="css/jquery-ui.css" rel="stylesheet">
+    <!-- MetisMenu CSS -->
+    <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="css/plugins/timeline.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="css/plugins/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="mainPage.html">自动化部</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> 用户信息</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> 设置</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> 注销</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="搜索...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a  href="mainPage.html"><i class="fa fa-dashboard fa-fw"></i> 概览</a>
+                        </li>
+                        <li>
+                            <a  class="active" href="recording.html"><i class="fa fa-bar-chart-o fa-fw"></i> 电话记录</a>                                     
+                        </li>
+                        <li>
+                            <a  href="historyrecord.html"><i class="fa fa-table fa-fw"></i> 历史记录</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-edit fa-fw"></i> 备品备件</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i>专业文档</a>                    
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+        <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">记录</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">值班电话记录</div>
+                        <div class="panel-body ">
+                          <form role="form" action="save.action" method="POST" > 
+                            <div class="col-lg-12 form-group">
+                              <label for="time" >接听时间:</label>                          
+                              <input type="text" id="time" name="time" size="10" class="form-control"/>
+                            </div>
+                            <div class="col-lg-12 form-group">
+                                <label for="name" >记录人:</label>
+                                <select class="form-control" name ="recorder">
+                                  <option></option>
+                                  <option>翟少军</option>
+                                  <option>曾旭川</option>
+                                  <option>刘帅</option>
+                                  <option>王辉</option>
+                                  <option>杨俊</option>
+                                  <option>海晨</option>
+                                  <option>代龙</option>
+                                  <option>谭华</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-12 form-group">
+                              <label for="context" >问题描述:</label>
+                              <textarea class="form-control" id="name" name ="desc" placeholder="请输入内容。。。" rows="6"></textarea>  
+                            </div>
+                            <div class="col-lg-12 form-group">
+                                <label for="solver" >处理人:</label>
+                                <select class="form-control" name="solver">
+                                  <option></option>
+                                  <option>翟少军</option>
+                                  <option>曾旭川</option>
+                                  <option>刘帅</option>
+                                  <option>王辉</option>
+                                  <option>杨俊</option>
+                                  <option>海晨</option>
+                                  <option>代龙</option>
+                                  <option>谭华</option>
+                                </select>
+                                </div>
+                             <div class="col-lg-12 form-group">
+                              <label for="context" >问题原因:</label>
+                              <textarea class="form-control" id="name" name ="desc" placeholder="请输入内容。。。" rows="6"></textarea>  
+                            </div>
+                            <div class="col-lg-12 form-group">
+                               <label for="name" >问题分类</label>
+                                <select class="form-control" name="systype">
+                                  <option>水调</option>
+                                  <option>监控</option>
+                                  <option>大屏</option>
+                                  <option>报表</option>
+                                  <option>其他</option>
+                                </select>
+                            </div> 
+                            <div class="col-lg-12 form-group">   
+                              <button type="submit" class="btn btn-default">提交</button>   
+                            </div>                         
+                          </form>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="script/jquery-1.11.1.min.js"></script>
+    <script src="script/jquery-ui.js"></script>
+    <script src="script/jquery-ui-timepicker-addon.js"></script>
+    
+    <!-- Bootstrap Core JavaScript -->
+    <script src="script/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="script/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript 
+    <script src="script/raphael.min.js"></script>
+    <script src="script/morris.min.js"></script>
+    <script src="script/morris-data.js"></script>
+-->
+    <!-- Custom Theme JavaScript -->
+    <script src="script/sb-admin-2.js"></script>
+    <script type="text/javascript">
+      $(function(){
+    	  $('#time').datetimepicker({dateFormat: 'yy-mm-dd',timeFormat: 'HH:mm' });
+      });
+    </script>
+</body>
+
+</html>

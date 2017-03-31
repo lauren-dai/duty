@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+ 
+<struts>
+   <package name="ajax" extends="json-default">
+       <action name="listdutylog" class="com.cypc.tgdc.cddc.ad.action.DutylogAction" method="execute">
+           <result name="success" type="json"></result>         
+       </action>
+        <action name="pie" class="com.cypc.tgdc.cddc.ad.action.ChartAction" method="getPieChart">
+           <result name="success" type="json"></result>         
+       </action>
+         <action name="monthcolumn" class="com.cypc.tgdc.cddc.ad.action.ChartAction" method="MonthColumnChart">
+           <result name="success" type="json"></result>         
+       </action>
+       <action name="namecolumn" class="com.cypc.tgdc.cddc.ad.action.ChartAction" method="NameColumnChart">
+           <result name="success" type="json"></result>         
+       </action>
+        <action name="timecolumn" class="com.cypc.tgdc.cddc.ad.action.ChartAction" method="TimeColumnChart">
+           <result name="success" type="json"></result>         
+       </action>
+       <action name="totalcolumn" class="com.cypc.tgdc.cddc.ad.action.ChartAction" method="TotalColumnChart">
+           <result name="success" type="json"></result>         
+       </action>
+       <action name="daycolumn" class="com.cypc.tgdc.cddc.ad.action.ChartAction" method="DayColumnChart">
+           <result name="success" type="json"></result>         
+       </action>
+   </package>
+   <package name="servlet" extends="struts-default">
+   <action name="save" class="com.cypc.tgdc.cddc.ad.action.DutylogServer" method="execute">
+       <result name="success">success.html</result>         
+   </action>
+   </package>
+</struts>

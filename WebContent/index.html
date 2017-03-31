@@ -1,0 +1,458 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+   <link href="css/bootstrap.min.css" rel="stylesheet">
+   <link  href="css/jquery.dataTables.css" rel="stylesheet">
+   <link  href="css/jquery-ui.css" rel="stylesheet">
+   <script src="script/jquery-1.11.1.min.js"></script>
+   <script src="script/bootstrap.min.js"></script>
+
+   <script src="script/highcharts.js"></script>
+    
+      <script src="script/modules/exporting.js"></script>
+   <script src="script/jquery.dataTables.min.js"></script>
+   <script src="script/jquery-ui.js"></script>
+   <script src="script/jquery-ui-timepicker-addon.js"></script>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+   <script type="text/javascript">
+
+   $(function(){
+	   Highcharts.setOptions({
+		    global: { useUTC: false},
+		    	credits : { enabled : false }
+		
+		});
+		$('#time').datetimepicker({dateFormat: 'yy-mm-dd',timeFormat: 'HH:mm', });
+		$('#logs').html( '<table cellpadding="0" cellspacing="0" border="0" class="display" id="list">'+
+				'<thead>'+
+				   '<tr>'+
+				    '<th>序号</th>'+
+				    '<th>时间</th>'+
+				    '<th>描述</th>'+
+				    '<th>记录人</th>'+
+				    '<th>解决人</th>'+
+				    '<th>记录时间</th>'+
+				    '<th>类型</th>'+
+				  '</tr>'+
+				'</thead>'+
+				'<tfoot>'+
+				  '<tr>'+
+				    '<th>序号</th>'+
+				    '<th>时间</th>'+
+				    '<th>描述</th>'+
+				    '<th>记录人</th>'+
+				    '<th>解决人</th>'+
+				    '<th>记录时间</th>'+
+				    '<th>类型</th>'+
+				    '</tr>'+
+                '</tfoot></table>');
+		$('#list').dataTable( {
+	        "ajax": {
+	            "url": "listdutylog.action",
+	            "dataSrc": "result",
+	        },
+	        "columns": [
+	         { "data": "id" },
+	        { "data": "time" },
+             { "data": "description" },
+	            { "data": "recorder" },
+	            { "data": "solver" },
+	            { "data": "recorde_time" },
+	            { "data": "type" }
+	        ],
+	        "aoColumnDefs": [
+	             { "sWidth": "4%", "aTargets": [0] }, 
+	             { "sWidth": "9%", "aTargets": [1] },
+	             { "sWidth": "60%", "aTargets": [2] },
+	             { "sWidth": "5%", "aTargets": [3] },
+	             { "sWidth": "5%", "aTargets": [4] },
+	             { "sWidth": "9%", "aTargets": [5] },
+	             { "sWidth": "5%", "aTargets": [6] }
+	       ],
+	       "oLanguage": {
+               "sProcessing": "正在加载中......",
+               "sLengthMenu": "每页显示 _MENU_ 条记录",
+               "sZeroRecords": "正在加载中......",
+               "sEmptyTable": "查询无数据！",
+               "sInfo": "当前显示 _START_ 到 _END_ 条，共 _TOTAL_ 条记录",
+               "sInfoEmpty": "显示0到0条记录",
+               "sInfoFiltered": "数据表中共为 _MAX_ 条记录",
+               "sSearch": "当前数据搜索",
+               "oPaginate": {
+                   "sFirst": "首页",
+                   "sPrevious": "上一页",
+                   "sNext": "下一页",
+                   "sLast": "末页"
+               }
+           }
+	        
+	    } );
+		$('#navTab li:eq(3) a').click(function(){
+			$.ajax({
+				type: "GET",
+				url: "pie.action",
+				success:function(result){
+					var datas = result.beans;
+					$('#pie').highcharts({
+						 chart: {
+					            plotBackgroundColor: null,
+					            plotBorderWidth: 1,//null,
+					            plotShadow: false
+					        },
+					        title: {
+					            text: '值班电话'
+					        },
+					        tooltip: {
+					            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+					        },
+					        plotOptions: {
+					            pie: {
+					                allowPointSelect: true,
+					                cursor: 'pointer',
+					                dataLabels: {
+					                    enabled: true,
+					                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+					                    style: {
+					                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+					                    }
+					                }
+					            }
+					        },
+					        series: [{
+					            type: 'pie',
+					            name: 'Browser share',
+					            data: (function () {
+				                    // generate an array of random data
+				                    var data = [],
+				                    i
+				                    for (i =0; i < datas.length; i += 1) {
+				                        data.push({
+				                            name: datas[i].typename,
+				                            y: parseInt(datas[i].number)
+				                       });
+				                   }
+				                    return data;
+				                }())
+					        }]
+					
+			          });
+				}
+			});
+			$.ajax({
+				type: "GET",
+				url: "monthcolumn.action",
+				success:function(result){
+					var datas = result.monthcolumns;
+					$('#monthcolumn').highcharts({
+						 chart: {
+							 type: 'column'
+					        },
+					        title: {
+					            text: '值班电话月分布情况'
+					        },
+					        xAxis: {
+					            type: 'category',
+					            labels: {
+					                rotation: -45,
+					                style: {
+					                    fontSize: '13px',
+					                    fontFamily: 'Verdana, sans-serif'
+					                }
+					            }
+					        },
+					        yAxis: {
+					            min: 0,
+					            title: {
+					                text: '个数'
+					            }
+					        },
+					        series: [{
+					        	name:'个数',
+					            data: (function () {
+				                    // generate an array of random data
+				                    var data = [],
+				                    i
+				                    for (i =0; i < datas.length; i += 1) {
+				                        data.push({
+				                            name: datas[i].month,
+				                            y: parseInt(datas[i].number)
+				                       });
+				                   }
+				                    return data;
+				                }()),
+				                dataLabels: {
+			                           enabled: true,
+			                           rotation: -90,
+			                           color: '#FFFFFF',
+			                           align: 'right',
+			                           x: 4,
+			                           y: 10,
+			                           style: {
+			                              fontSize: '13px',
+			                              fontFamily: 'Verdana, sans-serif',
+			                              textShadow: '0 0 3px black'
+			                           }
+			                    }
+					        }]
+					
+			          });
+				}
+			});
+			$.ajax({
+				type: "GET",
+				url: "namecolumn.action",
+				success:function(result){
+					var datas = result.namecolumns;
+					$('#namecolumn').highcharts({
+						 chart: {
+							 type: 'column'
+					        },
+					        title: {
+					            text: '值班电话接听分布情况'
+					        },
+					        xAxis: {
+					            type: 'category',
+					            labels: {
+					                rotation: -45,
+					                style: {
+					                    fontSize: '13px',
+					                    fontFamily: 'Verdana, sans-serif'
+					                }
+					            }
+					        },
+					        yAxis: {
+					            min: 0,
+					            title: {
+					                text: '个数'
+					            }
+					        },
+					        series: [{
+					        	name:'个数',
+					            data: (function () {
+				                    // generate an array of random data
+				                    var data = [],
+				                    i
+				                    for (i =0; i < datas.length; i += 1) {
+				                        data.push({
+				                            name: datas[i].name,
+				                            y: parseInt(datas[i].number)
+				                       });
+				                   }
+				                    return data;
+				                }()),
+				                dataLabels: {
+			                           enabled: true,
+			                           rotation: -90,
+			                           color: '#FFFFFF',
+			                           align: 'right',
+			                           x: 4,
+			                           y: 10,
+			                           style: {
+			                              fontSize: '13px',
+			                              fontFamily: 'Verdana, sans-serif',
+			                              textShadow: '0 0 3px black'
+			                           }
+			                    }
+					        }]
+					
+			          });
+				}
+			});
+			$.ajax({
+				type: "GET",
+				url: "timecolumn.action",
+				success:function(result){
+					var datas = result.timecolumns;
+					$('#timecolumn').highcharts({
+						 chart: {
+							 type: 'bar'
+					        },
+					        title: {
+					            text: '值班电话分布情况'
+					        },
+					        xAxis: {
+					            type: 'category',
+					            labels: {
+					                rotation: -45,
+					                style: {
+					                    fontSize: '13px',
+					                    fontFamily: 'Verdana, sans-serif'
+					                }
+					            }
+					        },
+					        yAxis: {
+					            min: 0,
+					            title: {
+					                text: '个数'
+					            },
+					            align: 'high',
+					            labels: {
+					                overflow: 'justify'
+					            }
+					        },
+					        series: [{
+					        	name:'个数',
+					            data: (function () {
+				                  
+				                    var data = [],
+				                    i
+				                    for (i =0; i < datas.length; i += 1) {
+				                        data.push({
+				                            name: datas[i].time,
+				                            y: parseInt(datas[i].number)
+				                       });
+				                   }
+				                    return data;
+				                }()),
+				                dataLabels: {
+			                           enabled: true,
+			                           rotation: -90,
+			                           color: '#FFFFFF',
+			                           align: 'right',
+			                           x: 4,
+			                           y: 10,
+			                           style: {
+			                              fontSize: '13px',
+			                              fontFamily: 'Verdana, sans-serif',
+			                              textShadow: '0 0 3px black'
+			                           }
+			                    }
+					        }]
+					
+			          });
+				}
+			});
+			$.ajax({
+				type: "GET",
+				url: "daycolumn.action",
+				success:function(result){
+					var datas = result.daycolumns;
+					$('#daycolumn').highcharts({
+						 chart: {
+							 type: 'column'
+					        },
+					        title: {
+					            text: '值班电话周分布情况'
+					        },
+					        xAxis: {
+					            type: 'category',
+					            labels: {
+					                rotation: -45,
+					                style: {
+					                    fontSize: '13px',
+					                    fontFamily: 'Verdana, sans-serif'
+					                }
+					            }
+					        },
+					        yAxis: {
+					            min: 0,
+					            title: {
+					                text: '个数'
+					            }
+					        },
+					        series: [{
+					        	name:'个数',
+					            data: (function () {
+				                    // generate an array of random data
+				                    var data = [],
+				                    i
+				                    for (i =0; i < datas.length; i += 1) {
+				                        data.push({
+				                            name: datas[i].day,
+				                            y: parseInt(datas[i].number)
+				                       });
+				                   }
+				                    return data;
+				                }()),
+				                dataLabels: {
+			                           enabled: true,
+			                           rotation: -90,
+			                           color: '#FFFFFF',
+			                           align: 'right',
+			                           x: 4,
+			                           y: 10,
+			                           style: {
+			                              fontSize: '13px',
+			                              fontFamily: 'Verdana, sans-serif',
+			                              textShadow: '0 0 3px black'
+			                           }
+			                    }
+					        }]
+					
+			          });
+				}
+			});
+		})
+   });
+   </script>
+
+<title>值班记录</title>
+</head>
+<body>
+
+<ul id='navTab' class="nav nav-pills nav-justified">
+   <li class="active"><a href="#home" data-toggle="pill">首页</a></li>
+   <li><a href="#record" data-toggle="pill">录入记录</a></li>
+   <li ><a href="#logs" data-toggle="pill">记录</a></li>
+   <li><a href="#charts" data-toggle="pill">图表</a></li>
+</ul><br>
+
+<div id="tabContent" class="tab-content">
+<div id="home" class="tab-pane fade in active"></div>
+<div id="record" class="tab-pane fade">
+<form role="form" action="save.action" method="POST">
+ <div class="form-inline">
+ <input type="text" id="time" name="time" size="30" class="form-control"/>
+ <input type="textarea" class="form-control" id="name" name ="desc" placeholder="请输入电话内容">
+  <label for="name" >录入人</label>
+      <select class="form-control" name ="recorder">
+         <option>翟少军</option>
+         <option>曾旭川</option>
+         <option>刘帅</option>
+         <option>王辉</option>
+         <option>杨俊</option>
+         <option>海晨</option>
+         <option>代龙</option>
+         <option>谭华</option>
+      </select>
+      
+      
+   <label for="name" >解决人</label>
+      <select class="form-control" name="solver">
+         <option>翟少军</option>
+         <option>曾旭川</option>
+         <option>刘帅</option>
+         <option>王辉</option>
+         <option>杨俊</option>
+         <option>海晨</option>
+         <option>代龙</option>
+         <option>谭华</option>
+      </select>
+     
+         <label for="name" >问题分类</label>
+      <select class="form-control" name="systype">
+         <option>水调</option>
+         <option>监控</option>
+         <option>大屏</option>
+         <option>报表</option>
+         <option>其他</option>
+      </select>
+   <button type="submit" class="btn btn-default">提交</button>
+   </div>
+</form>
+</div>
+<div id="logs" class="tab-pane fade ">
+</div>
+<div id="charts" class="tab-pane fade">
+   <div id="pie" style="min-width: 310px; height: 400px; width: 50%; margin: 0 auto"></div>
+   <div id="monthcolumn" style="min-width: 310px; height: 400px; width:40%; margin: 0 auto"></div>
+   <div id="namecolumn" style="min-width: 310px; height: 400px; width: 40%; margin: 0 auto"></div>
+   <div id="timecolumn" style="min-width: 310px; height: 800px; width: 400px; margin: 0 auto"></div>
+   <div id="daycolumn" style="min-width: 310px; height: 400px; width: 40%; margin: 0 auto"></div>
+
+</div>
+
+
+</div>
+</body>
+</html>
